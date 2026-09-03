@@ -5,6 +5,7 @@ const TOKEN_EXPIRE_KEY = "tasktracky.gdrive_token_expires_at";
 const CLIENT_ID_KEY = "tasktracky.gdrive_client_id";
 const LAST_SYNCED_KEY = "tasktracky.gdrive_last_synced_at";
 const FILE_NAME = "task-tracky-data.json";
+const DEFAULT_CLIENT_ID = "641569052350-lqqmu39ai1pv5o2gd894pp5t4652p7vl.apps.googleusercontent.com";
 
 export type SyncStatus = "idle" | "syncing" | "success" | "error";
 
@@ -42,7 +43,7 @@ class DriveSyncEngine {
       status: "idle",
       lastSyncedAt: lastSynced ? parseInt(lastSynced, 10) : null,
       lastError: null,
-      clientId: clientId || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || "",
+      clientId: clientId || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || DEFAULT_CLIENT_ID,
     };
   }
 
@@ -70,7 +71,7 @@ class DriveSyncEngine {
   }
 
   public getClientId(): string {
-    const raw = localStorage.getItem(CLIENT_ID_KEY) || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || "";
+    const raw = localStorage.getItem(CLIENT_ID_KEY) || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || DEFAULT_CLIENT_ID;
     return raw.trim();
   }
 
