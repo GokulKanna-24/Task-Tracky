@@ -63,13 +63,15 @@ class DriveSyncEngine {
   }
 
   public setClientId(clientId: string) {
-    localStorage.setItem(CLIENT_ID_KEY, clientId);
-    this.state.clientId = clientId;
+    const cleanId = clientId.trim();
+    localStorage.setItem(CLIENT_ID_KEY, cleanId);
+    this.state.clientId = cleanId;
     this.notify();
   }
 
   public getClientId(): string {
-    return localStorage.getItem(CLIENT_ID_KEY) || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || "";
+    const raw = localStorage.getItem(CLIENT_ID_KEY) || (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID || "";
+    return raw.trim();
   }
 
   public getAccessToken(): string | null {
